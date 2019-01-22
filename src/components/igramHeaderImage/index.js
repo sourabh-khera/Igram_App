@@ -6,7 +6,6 @@ import styles from './style';
 const igramHeaderImage = () => {
    const ratio = getPixelRatio();
    const imageAttributes = getImageWidthAndHeight(63, 30);
-   
    return (
           <Image source={require('../../../assets/images/igram_logo_dark.png')} 
              style={

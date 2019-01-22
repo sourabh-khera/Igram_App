@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import styles from './style';
 
 const buttonWithOpacity = ({ buttonText, buttonStyles, buttonTextStyles }) => (
