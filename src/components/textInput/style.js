@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica', 
     paddingLeft: 12, 
     marginBottom: 10, 
-    fontSize: 15
+    fontSize: 15,
   }  
 });
 

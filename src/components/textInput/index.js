@@ -6,7 +6,7 @@ import styles from './style';
 const textInput = ({ label, placeholderColor, maxLength, inputStyles, value, handleChangeText , secure}) => (
     <TextInput 
         placeholder={label}
-        placeholderTextColor="#f0beea"
+        placeholderTextColor={placeholderColor}
         style={[styles.inputDefaultStyles, {...inputStyles}]}
         maxLength={maxLength}
         value={value}
@@ -18,6 +18,7 @@ textInput.defaultProps = {
   placeholderColor: '#f0beea',
   label: 'Enter',
   maxLength: 40,
+  secure: false,
 }
 export default textInput;
 
