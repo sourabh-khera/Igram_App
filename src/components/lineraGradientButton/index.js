@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import styles from './style';
 
-const linearGradientbutton = ({gradientColors, buttonText, buttonTextStyles, buttonStyles}) => {
+const linearGradientbutton = ({gradientColors, buttonText, buttonTextStyles, buttonStyles, handleLogout}) => {
     return (
         <LinearGradient
             start={{ x: 1, y: 1 }} end={{ x: 0, y: 1 }}
             colors={gradientColors}            
             style={[styles.buttonDefaultStyles, {...buttonStyles}]}
+            onTouchStart={() => handleLogout()}
         >
           <Text style={[styles.buttonTextDefaultStyles, {...buttonTextStyles}]}>
              {buttonText}
@@ -19,7 +20,8 @@ const linearGradientbutton = ({gradientColors, buttonText, buttonTextStyles, but
 }
 
 linearGradientbutton.defaultProps = {
-  gradientColors: ['#8c358e', '#b01e7a']       
+  gradientColors: ['#8c358e', '#b01e7a'],
+  handleLogout: () => {},       
 };
 
 export default linearGradientbutton;

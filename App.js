@@ -7,11 +7,15 @@
  */
 
 import React from 'react';
-import TabNavigator from './src/navigations/tab_navigation';
-import LoginScreen from './src/screens/login';
+import { Provider } from 'react-redux';
+import store from './src/store';
+import AppEntry from './src/appEntry';
+
 const App = () => {
   return (
-     <TabNavigator />
+    <Provider store={store}>
+       <AppEntry />
+    </Provider>
   );
 }
 
