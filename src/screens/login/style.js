@@ -6,6 +6,15 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    userNameError: {
+      color: 'white', 
+      fontSize: 15, 
+      marginBottom: 10,
+    },
+    passWordError: {
+      color: 'white', 
+      fontSize: 15, 
+    }
 });
 
 export default styles;

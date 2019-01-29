@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   },
   searchTextInput: {
     width: '100%', 
-    borderColor: '#e0e0e0',
+    borderColor: '#eee',
     borderWidth: 1, 
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
   },
   userListContainer: {
     borderColor: '#e6e6e6', 

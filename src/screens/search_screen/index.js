@@ -12,7 +12,7 @@ class SearchScreen extends Component {
           <TextInput 
             label="Search..."
             inputStyles={styles.searchTextInput}
-            placeholderColor="#000"  
+            placeholderColor="#5f5f5f"  
           />
         </View>
          <View style={styles.userListContainer}>

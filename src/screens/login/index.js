@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Formik } from 'formik';
-import { string, object } from "yup";
+import { object, string } from 'yup';
 import Button from '../../components/button';
 import TextInput from '../../components/textInput';
 import { saveUserToken } from '../../actions/user.action';
@@ -21,18 +21,21 @@ class LoginScreen extends Component{
     this.setState({[key]: value});
   };
   
-  handleLogin = async (values) => {
-    console.log("values---", values)
-    const { saveUserLoginStatus } = this.props;
-    // if(values.userName.toLowerCase() === 'sourabh' && values.password === 'khera'){
-       await AsyncStorage.setItem('isAuth', 'true'); 
-       saveUserLoginStatus(true);
+  handleLogin = async (values, actions) => {
+    if(values.password !== 'khera'){
+      actions.setFieldError('password', 'Invalid Password');
+    }else {
+      const { saveUserLoginStatus } = this.props;
+      await AsyncStorage.setItem('isAuth', 'true'); 
+      saveUserLoginStatus(true);
+    }
   }
 
   render() {
    const imageAttributes = getImageWidthAndHeight(100, 45);
    const ratio = getPixelRatio();
    const { userName, password } = this.state;
+  
     return (
       <LinearGradient start={{x: 1, y: 1}} end={{x: 0,y: 1}}  colors={['#8c358e', '#b01e7a']} style={styles.container}>
         <Image source={require('../../../assets/images/igram_logo.png')} 
@@ -46,10 +49,10 @@ class LoginScreen extends Component{
         <Formik 
            initialValues={this.state}
            validationSchema={object().shape({
-            userName: string().lowercase().trim().required(Messages.emptyUsername).test('user_name', Messages.wrongUsername,(val)=> val === 'sourabh'),
-            password: string().lowercase().trim().required(Messages.emptyPassword).test('password', Messages.wrongPassword,(val)=> val === 'khera'),
+             userName: string().lowercase().trim().required(Messages.emptyUsername).test('user_name', Messages.wrongUsername, val => val === 'sourabh'),   
+             password: string().lowercase().trim().required(Messages.emptyPassword),   
            })}
-           onSubmit={(values)=>{this.handleLogin(values)}}
+           onSubmit={(values, actions) => {this.handleLogin(values, actions)}}
         >   
            {({
              values,
@@ -60,24 +63,24 @@ class LoginScreen extends Component{
            }) => (
           <Fragment>
             <TextInput 
-              label="Username"
-              placeholderTextColor="#f0beea"
-              value={values.userName}
-              handleTextChange={ value => {setFieldValue('userName', value)}}
-              name="userName"
-              keyboardType="email-address"
+               label="Username"
+               placeholderTextColor="#f0beea"
+               value={values.userName}
+               handleTextChange={value => {setFieldValue('userName', value)}}
+               name="userName"
+               keyboardType="email-address"
             />
-            {touched.userName && errors.userName && <Text style={{color: 'white', fontSize: 15, marginBottom: 10}}>{errors.userName}</Text>}
+            {touched.userName && errors.userName && <Text style={styles.userNameError}>{errors.userName}</Text>}
             <TextInput 
-              label="Password"
-              placeholderTextColor="#f0beea"
-              maxLength={20}
-              value={values.password}
-              secure={true}
-              name="password"
-              handleTextChange={value=>{setFieldValue('password', value)}}
+               label="Password"
+               placeholderTextColor="#f0beea"
+               maxLength={20}
+               value={values.password}
+               secure={true}
+               name="password"
+               handleTextChange={value => {setFieldValue('password', value)}}
             />
-            {touched.password && errors.password && <Text style={{color: 'white', fontSize: 15}}>{errors.password}</Text>}
+            {touched.password && errors.password && <Text style={styles.passWordError}>{errors.password}</Text>}
             <Button buttonText="Log In" handleButtonClick={handleSubmit}/>
           </Fragment>
            )}
