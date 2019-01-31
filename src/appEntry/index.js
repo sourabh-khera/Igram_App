@@ -4,21 +4,29 @@ import { connect } from 'react-redux';
 import { saveUserToken } from '../actions/user.action';
 import TabNavigator from '../navigations/tab_navigation';
 import LoginScreen from '../screens/login';
+import Loader from '../components/loader';
 
 class AppEntry extends Component {
-
+    
+    state = { isLoading: false };
+    
     async componentDidMount() {
        const { saveUserLoginStatus } = this.props;
+       this.setState({isLoading: true});
        const auth = await AsyncStorage.getItem('isAuth');
+       this.setState({isLoading:false});
        JSON.parse(auth) ? saveUserLoginStatus(JSON.parse(auth)) : saveUserLoginStatus(false);
     }
-    
+
     render() {
+       const { isLoading } = this.state; 
        const { authenticated } = this.props;
        const renderScreen  = authenticated ? <TabNavigator /> : <LoginScreen />
+       const renderComponent = isLoading ? <Loader /> : renderScreen
+
        return (
            <View style={{flex: 1}}>
-              {renderScreen}               
+              {renderComponent}
            </View>
        );
     }
