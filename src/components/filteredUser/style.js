@@ -2,12 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     userListContainer: {
-      borderColor: '#e6e6e6', 
+      borderColor: '#eee', 
       borderWidth: 1,
-      flexDirection: 'row', 
-      flex: 0.1, 
+      flexDirection: 'row',  
       justifyContent: 'space-between', 
       alignItems: 'center',
+      paddingVertical: 15
     },
     userName: {
       fontSize: 15, 

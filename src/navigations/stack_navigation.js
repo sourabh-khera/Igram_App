@@ -4,6 +4,7 @@ import HomeScreen from '../screens/home_screen';
 import SearchScreen from '../screens/search_screen';
 import ProfileScreen from '../screens/profile_screen';
 import IgramHeaderImage from '../components/igramHeaderImage';
+import SpecificUserScreen from '../screens/specific_user_screen';
 
 const commonOptions = {
     headerLeft: null,
@@ -14,6 +15,8 @@ const commonOptions = {
         borderBottomWidth: 2
     },
     headerTitle: <IgramHeaderImage />,
+    headerTintColor: '#000',
+    headerBackTitle: null
 };
 
 const {headerLeft, gesturesEnabled, ...restOptions} = commonOptions; 
@@ -35,6 +38,10 @@ export const ProfileStack = createStackNavigator({
 export const SearchStack = createStackNavigator({
     Search: {
         screen: SearchScreen,
+        navigationOptions: {...restOptions}
+    },
+    SearchedUser: {
+        screen: SpecificUserScreen,
         navigationOptions: {...restOptions}
     }
 });   
