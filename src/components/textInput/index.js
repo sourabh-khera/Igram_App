@@ -10,12 +10,12 @@ const textInput = (
     maxLength, 
     inputStyles, 
     value, 
-    handleChangeText, 
     secure, 
     textColor, 
     handleTextChange,
     name,
     keyboardType,
+    selectionColor,
   }) => (
     <TextInput 
         placeholder={label}
@@ -27,7 +27,7 @@ const textInput = (
         secureTextEntry={secure}
         autoCapitalize={"none"}
         autoCorrect={false}
-        selectionColor="#fff"
+        selectionColor={selectionColor}
         onChangeText={(value)=>handleTextChange(value)}
         underlineColorAndroid="transparent"
         keyboardType={keyboardType}
@@ -40,7 +40,8 @@ textInput.defaultProps = {
   maxLength: 40,
   secure: false,
   textColor: '#fff',
-  keyboardType: "default"
+  keyboardType: "default",
+  selectionColor: '#fff'
 }
 export default textInput;
 
