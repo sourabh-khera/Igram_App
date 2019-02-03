@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './style';
 
-const userPost = ({height, ratio}) => (
+const userPost = ({height, ratio, url, createdAt}) => (
   <Fragment>
-     <View style={{ width: '100%', height: height / ratio, backgroundColor: 'gray' }} />
+     <Image source={{uri: url}} style={{ width: '100%', height: height / ratio}} />
+     {/* <View style={{ width: '100%', height: height / ratio, backgroundColor: 'gray' }} /> */}
      <View style={styles.likeContainer}>
          <Ionicons name="md-heart-empty" size={28} />
-         <Text style={styles.dateTimeText}>14th Sep, 11:00AM</Text>
+         <Text style={styles.dateTimeText}>{createdAt}</Text>
      </View>
   </Fragment>
 ); 

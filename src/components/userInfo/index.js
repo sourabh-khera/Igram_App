@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import styles from './style';
 
-const userInfo = ({height, width, ratio}) => (
+const userInfo = ({height, width, ratio, url, userName}) => (
     <View style={styles.thumbnailContainer}>
-        <View style={{...styles.thumbNail, height: height/ ratio, width: width / ratio}}/>
-        <Text style={styles.nameText}>Sourabh Khera</Text>
+        <Image source={{uri: url}} style={{...styles.thumbNail, height: height/ ratio, width: width / ratio}} borderRadius={25}/>
+        <Text style={styles.nameText}>{userName}</Text>
     </View>
 );
 

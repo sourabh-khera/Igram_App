@@ -9,8 +9,6 @@ const styles = StyleSheet.create({
     },
     thumbNail: {
       marginLeft: 10,
-      borderRadius: 100/0.5,
-      backgroundColor: 'green',
     },  
     nameText: {
       fontSize: 15, 
