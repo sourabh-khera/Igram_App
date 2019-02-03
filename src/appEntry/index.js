@@ -4,24 +4,31 @@ import { connect } from 'react-redux';
 import { saveUserToken } from '../actions/user.action';
 import TabNavigator from '../navigations/tab_navigation';
 import LoginScreen from '../screens/login';
+import Loader from '../components/loader';
 
 class AppEntry extends Component {
-
-    async componentDidMount() {
-       const { saveUserLoginStatus } = this.props;
-       const auth = await AsyncStorage.getItem('isAuth');
-       JSON.parse(auth) ? saveUserLoginStatus(JSON.parse(auth)) : saveUserLoginStatus(false);
-    }
     
-    render() {
-       const { authenticated } = this.props;
-       const renderScreen  = authenticated ? <TabNavigator /> : <LoginScreen />
-       return (
-           <View style={{flex: 1}}>
-              {renderScreen}               
-           </View>
-       );
-    }
+   state = { isLoading: false };
+   
+   async componentDidMount() {
+      const { saveUserLoginStatus } = this.props;
+      this.setState({isLoading: true});
+      const auth = await AsyncStorage.getItem('isAuth');
+      this.setState({isLoading:false});
+      JSON.parse(auth) ? saveUserLoginStatus(JSON.parse(auth)) : saveUserLoginStatus(false);
+   }
+
+  render() {
+     const { isLoading } = this.state; 
+     const { authenticated } = this.props;
+     const renderScreen  = authenticated ? <TabNavigator /> : <LoginScreen />
+     const renderComponent = isLoading ? <Loader moveLeft={38} moveTop={40} /> : renderScreen
+  return (
+      <View style={{flex: 1}}>
+         {renderComponent}
+      </View>
+   );
+ }
 }
 
 const mapStateToProps = state => ({
