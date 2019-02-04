@@ -5,11 +5,11 @@ import styles from './style';
 
 const filteredUser = ({ userName, handleClick }) => {
     return (
-        <TouchableOpacity onPress={() => handleClick()} style={styles.userListContainer}>
+        <TouchableOpacity onPress={handleClick} style={styles.userListContainer}>
                 <Text style={styles.userName}>{userName}</Text>
                 <Ionicons name="chevron-right" size={40} />
         </TouchableOpacity>
-    )
+    );
 }
 
 export default filteredUser;

@@ -17,16 +17,16 @@ class SearchScreen extends Component {
     let uniqPosts = [...new Set(filteredPosts.map(item => item.caption.from.id))].map(id => filteredPosts.find(s => s.caption.from.id === id))
     this.setState({ filteredPosts: uniqPosts, searchUser: e });
   }
-  handleClick = () => {
-    console.log("hello");
-    const { navigation } = this.props;
-    navigation.navigate('SearchedUser');
+  handleClick = (id) => () => {
+    const { navigation, userPosts } = this.props;
+    const searchedPosts = userPosts.filter(item => item.caption.from.id === id);
+    navigation.navigate('SearchedUser', {'posts': searchedPosts});
   }
   renderedFilteredUserList = ({ item }) => {
     const { caption } = item;
-    const { full_name } = caption.from;
+    const { full_name, id } = caption.from;
     return (
-      <FilteredUser userName={full_name} handleClick={this.handleClick} />
+      <FilteredUser userName={full_name} handleClick={this.handleClick(id)} />
     )
   }
   render() {

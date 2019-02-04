@@ -14,11 +14,6 @@ const styles = StyleSheet.create({
     fontSize: 15, 
     marginLeft: 10, 
   },
-  thumbNail: {
-    marginLeft: 10,
-    borderRadius: 100/0.5,
-    backgroundColor: 'green',
-  },
   defaultPostCount: {
     marginLeft: 10, 
     fontWeight: 'bold'
