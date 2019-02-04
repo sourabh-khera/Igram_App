@@ -30,6 +30,8 @@ const TabNavigator =  createBottomTabNavigator(
       showLabel: false,
       style: {  
        backgroundColor: '#f8f8f8',
+       borderTopColor: '#dbdbdb',
+       borderTopWidth: 1
       },
     },
   }

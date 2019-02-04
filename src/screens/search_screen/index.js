@@ -15,7 +15,6 @@ class SearchScreen extends Component {
     const { userPosts } = this.props;
     let filteredPosts = userPosts.filter(item => item.caption.from.full_name.toLowerCase().trim().match(e));
     let uniqPosts = [...new Set(filteredPosts.map(item => item.caption.from.id))].map(id => filteredPosts.find(s => s.caption.from.id === id))
-    console.log(uniqPosts)
     this.setState({ filteredPosts: uniqPosts, searchUser: e });
   }
   handleClick = () => {
