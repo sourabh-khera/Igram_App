@@ -14,6 +14,15 @@ const styles = StyleSheet.create({
     passWordError: {
       color: 'white', 
       fontSize: 15, 
+    },
+    bottomTextContainer: {
+      flexDirection: 'row', 
+      marginTop: 50
+    },
+    loginText: {
+      color: '#fff', 
+      fontWeight: "bold",
+      fontFamily: 'Helvetica', 
     }
 });
 

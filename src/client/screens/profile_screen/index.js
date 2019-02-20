@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { clearToken } from '../../actions/user.action';
-import { getPixelRatio, getImageWidthAndHeight } from '../../utils/commonFuncions';
+import { getPixelRatio, getImageWidthAndHeight } from '../../../utils/commonFuncions';
 import LinearGradientButton from '../../components/lineraGradientButton';
 import styles from './style';
 

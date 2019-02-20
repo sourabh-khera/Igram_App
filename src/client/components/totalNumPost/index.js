@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
-import { getImageWidthAndHeight, getPixelRatio } from '../../utils/commonFuncions';
+import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import styles from './style';
 
 const totalNumberofPosts = ({height, width, url, ratio, nameStyles, postCountStyles, userName, postCount}) => {

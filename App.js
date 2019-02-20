@@ -8,8 +8,8 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './src/store';
-import AppEntry from './src/appEntry';
+import store from './src/client/store';
+import AppEntry from './src/client/appEntry';
 
 const App = () => {
   return (

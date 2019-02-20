@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import moment from 'moment';
-import { getImageWidthAndHeight, getPixelRatio } from '../../utils/commonFuncions';
+import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import TotalPostsCount from '../../components/totalNumPost';
 import UserInfo from '../../components/userInfo';
 import UserPost from '../../components/userPost';

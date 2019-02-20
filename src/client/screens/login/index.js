@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { Text, TouchableOpacity, Image, AsyncStorage, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Button from '../../components/button';
 import TextInput from '../../components/textInput';
 import { saveUserToken } from '../../actions/user.action';
-import { getImageWidthAndHeight, getPixelRatio } from '../../utils/commonFuncions';
+import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import { Messages } from '../../constants';
 import styles from './style';
 
@@ -15,6 +15,7 @@ class LoginScreen extends Component{
   state = {
     userName: '',
     password: '',
+    type: 'login'
   };
 
   handleChange = (key, value) => {
@@ -31,14 +32,22 @@ class LoginScreen extends Component{
     }
   }
 
+  handleTextClick = () => {
+    const { type } = this.state;
+    const updateType = type === 'login' ? 'signup': 'login'
+    this.setState({type: updateType});
+  }
+
   render() {
    const imageAttributes = getImageWidthAndHeight(100, 45);
    const ratio = getPixelRatio();
-   const { userName, password } = this.state;
-  
+   const { userName, password, type } = this.state;
+   const renderQuestionText = type === 'login' ? 'New to igram ? ' : 'Already a user ? ';
+   const renderOptionText = type === 'login' ? 'Sign Up' : 'Login';
+   const renderButtonText = type === 'login' ? 'Log In' : 'Sign Up';
     return (
       <LinearGradient start={{x: 1, y: 1}} end={{x: 0,y: 1}}  colors={['#8c358e', '#b01e7a']} style={styles.container}>
-        <Image source={require('../../../assets/images/igram_logo.png')} 
+        <Image source={require('../../../../assets/images/igram_logo.png')} 
            style={
              {
                width: imageAttributes.width / ratio, 
@@ -49,7 +58,7 @@ class LoginScreen extends Component{
         <Formik 
            initialValues={this.state}
            validationSchema={object().shape({
-             userName: string().lowercase().trim().required(Messages.emptyUsername).test('user_name', Messages.wrongUsername, val => val === 'sourabh'),   
+             userName: string().lowercase().trim().required(Messages.emptyUsername),   
              password: string().lowercase().trim().required(Messages.emptyPassword),   
            })}
            onSubmit={(values, actions) => {this.handleLogin(values, actions)}}
@@ -81,7 +90,13 @@ class LoginScreen extends Component{
                handleTextChange={value => {setFieldValue('password', value)}}
             />
             {touched.password && errors.password && <Text style={styles.passWordError}>{errors.password}</Text>}
-            <Button buttonText="Log In" handleButtonClick={handleSubmit}/>
+            <Button buttonText={renderButtonText} handleButtonClick={handleSubmit}/>
+            <View style={styles.bottomTextContainer}>
+               <Text style={styles.loginText}>{renderQuestionText}</Text>
+               <TouchableOpacity onPress={this.handleTextClick}>
+                 <Text style={styles.loginText}>{renderOptionText}</Text>
+               </TouchableOpacity>
+            </View>
           </Fragment>
            )}
         </Formik>

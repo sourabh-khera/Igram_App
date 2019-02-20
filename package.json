@@ -7,8 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "formik": "^1.4.2",
+    "jsonwebtoken": "^8.4.0",
     "moment": "^2.24.0",
+    "mongoose": "^5.4.14",
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-gesture-handler": "^1.0.12",

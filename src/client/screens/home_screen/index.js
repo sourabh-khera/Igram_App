@@ -3,7 +3,7 @@ import { Text, View, FlatList } from 'react-native';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { fetchUsersPosts } from '../../actions/async.actions/posts_async';
-import { getImageWidthAndHeight, getPixelRatio } from '../../utils/commonFuncions';
+import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import UserInfo from '../../components/userInfo';
 import UserPost from '../../components/userPost';
 import Loader from '../../components/loader';
