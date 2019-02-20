@@ -3,6 +3,6 @@ import {
    CLEAR_USER_TOKEN,
 } from '../constants';
 
-export const saveUserToken = auth => ({type: IS_AUTHENTICATED, auth});
+export const saveUserToken = token => ({type: IS_AUTHENTICATED, token});
 
 export const clearToken = () => ({type: CLEAR_USER_TOKEN});

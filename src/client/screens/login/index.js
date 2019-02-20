@@ -7,6 +7,7 @@ import { object, string } from 'yup';
 import Button from '../../components/button';
 import TextInput from '../../components/textInput';
 import { saveUserToken } from '../../actions/user.action';
+import { addUser } from '../../actions/async.actions/user_async';
 import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import { Messages } from '../../constants';
 import styles from './style';
@@ -18,17 +19,19 @@ class LoginScreen extends Component{
     type: 'login'
   };
 
-  handleChange = (key, value) => {
-    this.setState({[key]: value});
-  };
-  
   handleLogin = async (values, actions) => {
-    if(values.password !== 'khera'){
-      actions.setFieldError('password', 'Invalid Password');
-    }else {
-      const { saveUserLoginStatus } = this.props;
-      await AsyncStorage.setItem('isAuth', 'true'); 
-      saveUserLoginStatus(true);
+    const { type } = this.state;
+    const { createUser } = this.props;
+    if(type !== 'login'){
+       createUser(values); 
+    } else {
+      // if(values.password !== 'khera'){
+      //   actions.setFieldError('password', 'Invalid Password');
+      // }else {
+      //   const { saveUserLoginStatus } = this.props;
+      //   await AsyncStorage.setItem('isAuth', 'true'); 
+      //   saveUserLoginStatus(true);
+      // }
     }
   }
 
@@ -107,5 +110,6 @@ class LoginScreen extends Component{
 
 mapDispatchToProps = dispatch => ({
   saveUserLoginStatus: auth => dispatch(saveUserToken(auth)),
+  createUser: userInfo => dispatch(addUser(userInfo)),
 });
 export default connect(null, mapDispatchToProps)(LoginScreen); 

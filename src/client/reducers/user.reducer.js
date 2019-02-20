@@ -5,14 +5,15 @@ import {
 
 const initialState = {
     authenticated: false,
+    token: '',
 }
 
-const saveToken = (state, { auth }) => {
-    return {...state, authenticated: auth}
+const saveToken = (state, { token }) => {
+    return {...state, token}
 };
 
 const clearToken = state => {
-    return {...state, authenticated: false}
+    return {...state, token: ''}
 };
 
 const userReducer = (state = initialState, action) => {
