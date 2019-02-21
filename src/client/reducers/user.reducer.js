@@ -3,29 +3,24 @@ import {
   CLEAR_USER_TOKEN,
   SAVE_USER_SIGN_UP_STATUS,
   SAVE_USER_LOGIN_STATUS,
+  RESET_USER_STATUS,
 } from '../constants';
 
 const initialState = {
-    authenticated: false,
+    authenticated: true,
     token: '',
-    userAdded: false,
+    userAdded: true,
 }
 
-const saveToken = (state, { token }) => {
-    return {...state, token}
-};
+const saveToken = (state, { token }) => ({...state, token});
 
-const saveSignupStatus = (state, { userAdded }) => {
-  return {...state, userAdded}
-};
+const saveSignupStatus = (state, { userAdded }) => ({...state, userAdded});
 
-const saveLoginStatus = (state, { authenticated }) => {
-  return {...state, authenticated}
-};
+const saveLoginStatus = (state, { authenticated }) => ({...state, authenticated});
 
-const clearToken = state => {
-    return initialState;
-};
+const clearToken = state => (initialState);
+
+const resetStatus = state => ({userAdded: true, authenticated: true});
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -34,12 +29,14 @@ const userReducer = (state = initialState, action) => {
     case CLEAR_USER_TOKEN:
       return clearToken(state);
     case SAVE_USER_SIGN_UP_STATUS:
-      return saveSignupStatus(state);
+      return saveSignupStatus(state, action);
     case SAVE_USER_LOGIN_STATUS:
-      return saveLoginStatus(state);
+      return saveLoginStatus(state, action);
+    case RESET_USER_STATUS:
+      return resetStatus(state);
       
     default: return state;
-}
+  }
 };
 
 export default userReducer;

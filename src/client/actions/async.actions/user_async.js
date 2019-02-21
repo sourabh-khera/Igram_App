@@ -15,9 +15,10 @@ export const addUser = userInfo => async dispatch => {
             if (json.userCreated) {
                 await AsyncStorage.setItem('token', json.token);
                 dispatch(saveUserToken(json.token));
-                dispatch(userSignupStatus(json.userCreated))
+                dispatch(userSignupStatus(json.userCreated));
             } else {
-                saveUserToken('');
+                dispatch(saveUserToken(''));
+                dispatch(userSignupStatus(json.userCreated));
             }
         }
     }
@@ -34,14 +35,15 @@ export const authenticateUser = userInfo => async dispatch => {
             headers: { 'Content-Type': 'application/json' },
         });
         const json = await response.json();
-        console.log(json, "json---")
         if (response.status === 200 && !isEmpty(response)) {
             if (json.authenticated) {
                 await AsyncStorage.setItem('token', json.token);
                 dispatch(saveUserToken(json.token));
-                dispatch(userLoginStatus(json.authenticated))
+                dispatch(userLoginStatus(json.authenticated));
             } else {
-                saveUserToken('');
+            console.log(json, "json---")
+                dispatch(saveUserToken(''));
+                dispatch(userLoginStatus(json.authenticated));
             }
         }
     }

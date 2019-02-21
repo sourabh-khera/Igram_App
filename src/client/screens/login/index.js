@@ -7,7 +7,7 @@ import { object, string } from 'yup';
 import Button from '../../components/button';
 import DismissKeyBoard from '../../components/dismissKeyboard';
 import TextInput from '../../components/textInput';
-import { saveUserToken } from '../../actions/user.action';
+import { saveUserToken, resetUserStatus } from '../../actions/user.action';
 import { addUser, authenticateUser } from '../../actions/async.actions/user_async';
 import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import { Messages } from '../../constants';
@@ -25,13 +25,8 @@ class LoginScreen extends Component{
     const { createUser, userAdded, validateUser, authenticated } = this.props;
     if(type !== 'login'){
        createUser(values); 
-       if(!userAdded)
-         actions.setFieldError('userName', Messages.userExists); 
     } else {
       validateUser(values);
-      if(!authenticated){
-        actions.setFieldError('password', Messages.wrongDetails)
-      }
     }
   }
 
@@ -42,6 +37,14 @@ class LoginScreen extends Component{
     this.form.resetForm();
   }
 
+  componentWillReceiveProps(nextProps){
+     const { authenticated, userAdded } = nextProps;
+     const { resetUserStatus } = this.props;
+     resetUserStatus();
+     !userAdded ? this.form.setFieldError('userName', Messages.userExists) : null;
+     !authenticated ? this.form.setFieldError('password', Messages.wrongDetails) : null;
+  }
+
   render() {
    const imageAttributes = getImageWidthAndHeight(100, 45);
    const ratio = getPixelRatio();
@@ -49,6 +52,7 @@ class LoginScreen extends Component{
    const renderQuestionText = type === 'login' ? 'New to igram ? ' : 'Already a user ? ';
    const renderOptionText = type === 'login' ? 'Sign Up' : 'Login';
    const renderButtonText = type === 'login' ? 'Log In' : 'Sign Up';
+   
     return (
      <DismissKeyBoard> 
       <LinearGradient start={{x: 1, y: 1}} end={{x: 0,y: 1}}  colors={['#8c358e', '#b01e7a']} style={styles.container}>
@@ -120,5 +124,6 @@ mapDispatchToProps = dispatch => ({
   saveUserLoginStatus: auth => dispatch(saveUserToken(auth)),
   createUser: userInfo => dispatch(addUser(userInfo)),
   validateUser: userInfo => dispatch(authenticateUser(userInfo)),
+  resetUserStatus: () => dispatch(resetUserStatus()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen); 

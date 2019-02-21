@@ -21,8 +21,8 @@ exports.createUser = (req, res) => {
           res.status(200).send({userCreated});
         }
       })
-      .catch(err => res.status(400).send({userCreated: false}));
-   }).catch(err => res.status(400).send('erroe in password encryption'));
+      .catch(err => res.sendStatus(404));
+    }).catch(err => res.status(404).send('error in password encryption'));
    
 }
 
@@ -42,11 +42,11 @@ exports.authenticateUser = (req, res) => {
             res.status(200).send({authenticated: false});
           }
        })
-       .catch(err => res.status(400).send('error in password decryption'));
+       .catch(err => res.status(404).send('error in password decryption'));
       } else {
-        res.status(400).send({authenticated: false});
+        res.status(200).send({authenticated: false});
       }
       
-  }).catch(err => res.status(400).send({authenticated: false}));
+  }).catch(err => res.sendStatus(404));
       
 }
