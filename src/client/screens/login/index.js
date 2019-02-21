@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableOpacity, Image, AsyncStorage, View } from 'react-native';
+import { Text, TouchableOpacity, Image, AsyncStorage, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Button from '../../components/button';
+import DismissKeyBoard from '../../components/dismissKeyboard';
 import TextInput from '../../components/textInput';
-import { saveUserToken } from '../../actions/user.action';
+import { saveUserToken, resetUserStatus } from '../../actions/user.action';
+import { addUser, authenticateUser } from '../../actions/async.actions/user_async';
 import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import { Messages } from '../../constants';
 import styles from './style';
@@ -18,17 +20,13 @@ class LoginScreen extends Component{
     type: 'login'
   };
 
-  handleChange = (key, value) => {
-    this.setState({[key]: value});
-  };
-  
   handleLogin = async (values, actions) => {
-    if(values.password !== 'khera'){
-      actions.setFieldError('password', 'Invalid Password');
-    }else {
-      const { saveUserLoginStatus } = this.props;
-      await AsyncStorage.setItem('isAuth', 'true'); 
-      saveUserLoginStatus(true);
+    const { type } = this.state;
+    const { createUser, userAdded, validateUser, authenticated } = this.props;
+    if(type !== 'login'){
+       createUser(values); 
+    } else {
+      validateUser(values);
     }
   }
 
@@ -36,6 +34,15 @@ class LoginScreen extends Component{
     const { type } = this.state;
     const updateType = type === 'login' ? 'signup': 'login'
     this.setState({type: updateType});
+    this.form.resetForm();
+  }
+
+  componentWillReceiveProps(nextProps){
+     const { authenticated, userAdded } = nextProps;
+     const { resetUserStatus } = this.props;
+     resetUserStatus();
+     !userAdded ? this.form.setFieldError('userName', Messages.userExists) : null;
+     !authenticated ? this.form.setFieldError('password', Messages.wrongDetails) : null;
   }
 
   render() {
@@ -45,7 +52,9 @@ class LoginScreen extends Component{
    const renderQuestionText = type === 'login' ? 'New to igram ? ' : 'Already a user ? ';
    const renderOptionText = type === 'login' ? 'Sign Up' : 'Login';
    const renderButtonText = type === 'login' ? 'Log In' : 'Sign Up';
+   
     return (
+     <DismissKeyBoard> 
       <LinearGradient start={{x: 1, y: 1}} end={{x: 0,y: 1}}  colors={['#8c358e', '#b01e7a']} style={styles.container}>
         <Image source={require('../../../../assets/images/igram_logo.png')} 
            style={
@@ -56,6 +65,7 @@ class LoginScreen extends Component{
           }
         />
         <Formik 
+           ref={Formik => {this.form = Formik}}
            initialValues={this.state}
            validationSchema={object().shape({
              userName: string().lowercase().trim().required(Messages.emptyUsername),   
@@ -101,11 +111,19 @@ class LoginScreen extends Component{
            )}
         </Formik>
       </LinearGradient>
+      </DismissKeyBoard>
     );
   }
 }
 
+mapStateToProps = state => ({
+  userAdded: state.userReducer.userAdded,
+  authenticated: state.userReducer.authenticated,
+});
 mapDispatchToProps = dispatch => ({
   saveUserLoginStatus: auth => dispatch(saveUserToken(auth)),
+  createUser: userInfo => dispatch(addUser(userInfo)),
+  validateUser: userInfo => dispatch(authenticateUser(userInfo)),
+  resetUserStatus: () => dispatch(resetUserStatus()),
 });
-export default connect(null, mapDispatchToProps)(LoginScreen); 
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen); 

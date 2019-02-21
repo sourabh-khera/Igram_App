@@ -5,6 +5,7 @@ import SearchScreen from '../screens/search_screen';
 import ProfileScreen from '../screens/profile_screen';
 import IgramHeaderImage from '../components/igramHeaderImage';
 import SpecificUserScreen from '../screens/specific_user_screen';
+import PostScreen from '../screens/post_screen';
 
 const commonOptions = {
     headerLeft: null,
@@ -31,6 +32,13 @@ export const HomeStack = createStackNavigator({
 export const ProfileStack = createStackNavigator({
     Profile: {
         screen: ProfileScreen,
+        navigationOptions: {...commonOptions}
+    }    
+});   
+
+export const AddPostStack = createStackNavigator({
+    AddPost: {
+        screen: PostScreen,
         navigationOptions: {...commonOptions}
     }    
 });   

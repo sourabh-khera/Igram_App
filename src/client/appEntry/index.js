@@ -11,17 +11,17 @@ class AppEntry extends Component {
    state = { isLoading: false };
    
    async componentDidMount() {
-      const { saveUserLoginStatus } = this.props;
+      const { saveUserToken } = this.props;
       this.setState({isLoading: true});
-      const auth = await AsyncStorage.getItem('isAuth');
+      const token = await AsyncStorage.getItem('token');
       this.setState({isLoading:false});
-      JSON.parse(auth) ? saveUserLoginStatus(JSON.parse(auth)) : saveUserLoginStatus(false);
+      token ? saveUserToken(token) : saveUserToken('');
    }
 
   render() {
      const { isLoading } = this.state; 
-     const { authenticated } = this.props;
-     const renderScreen  = authenticated ? <TabNavigator /> : <LoginScreen />
+     const { token } = this.props;
+     const renderScreen  = token ? <TabNavigator /> : <LoginScreen />
      const renderComponent = isLoading ? <Loader moveLeft={38} moveTop={40} /> : renderScreen
   return (
       <View style={{flex: 1}}>
@@ -32,9 +32,9 @@ class AppEntry extends Component {
 }
 
 const mapStateToProps = state => ({
-  authenticated: state.userReducer.authenticated,
+  token: state.userReducer.token,
 });
 const mapDispatchToProps = dispatch => ({
-  saveUserLoginStatus: auth => dispatch(saveUserToken(auth)),
+   saveUserToken: token => dispatch(saveUserToken(token)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AppEntry);
