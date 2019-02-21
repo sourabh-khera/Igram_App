@@ -9,7 +9,7 @@ import styles from './style';
 class ProfileScreen extends Component {
   handleLogout = async () => {
     const { clearUserToken } = this.props;
-    await AsyncStorage.removeItem('isAuth');
+    await AsyncStorage.removeItem('token');
     clearUserToken();
   } 
   render() {

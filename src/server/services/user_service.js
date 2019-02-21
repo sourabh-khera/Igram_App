@@ -19,3 +19,17 @@ exports.addUser = userDetails => {
 
     });
 }
+
+
+exports.validateUser = userDetails => {
+    return new Promise((resolve, reject) => {
+        userSchema.findOne({ Username: userDetails.userName }, (err, user) => {
+            if (err) {
+                reject(err);
+            } else if (user) {
+                resolve(user);
+            }
+            resolve({});
+        });
+    });
+}

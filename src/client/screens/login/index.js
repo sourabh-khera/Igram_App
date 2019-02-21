@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Text, TouchableOpacity, Image, AsyncStorage, View } from 'react-native';
+import { Text, TouchableOpacity, Image, AsyncStorage, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Formik } from 'formik';
 import { object, string } from 'yup';
 import Button from '../../components/button';
+import DismissKeyBoard from '../../components/dismissKeyboard';
 import TextInput from '../../components/textInput';
 import { saveUserToken } from '../../actions/user.action';
-import { addUser } from '../../actions/async.actions/user_async';
+import { addUser, authenticateUser } from '../../actions/async.actions/user_async';
 import { getImageWidthAndHeight, getPixelRatio } from '../../../utils/commonFuncions';
 import { Messages } from '../../constants';
 import styles from './style';
@@ -21,17 +22,16 @@ class LoginScreen extends Component{
 
   handleLogin = async (values, actions) => {
     const { type } = this.state;
-    const { createUser } = this.props;
+    const { createUser, userAdded, validateUser, authenticated } = this.props;
     if(type !== 'login'){
        createUser(values); 
+       if(!userAdded)
+         actions.setFieldError('userName', Messages.userExists); 
     } else {
-      // if(values.password !== 'khera'){
-      //   actions.setFieldError('password', 'Invalid Password');
-      // }else {
-      //   const { saveUserLoginStatus } = this.props;
-      //   await AsyncStorage.setItem('isAuth', 'true'); 
-      //   saveUserLoginStatus(true);
-      // }
+      validateUser(values);
+      if(!authenticated){
+        actions.setFieldError('password', Messages.wrongDetails)
+      }
     }
   }
 
@@ -39,6 +39,7 @@ class LoginScreen extends Component{
     const { type } = this.state;
     const updateType = type === 'login' ? 'signup': 'login'
     this.setState({type: updateType});
+    this.form.resetForm();
   }
 
   render() {
@@ -49,6 +50,7 @@ class LoginScreen extends Component{
    const renderOptionText = type === 'login' ? 'Sign Up' : 'Login';
    const renderButtonText = type === 'login' ? 'Log In' : 'Sign Up';
     return (
+     <DismissKeyBoard> 
       <LinearGradient start={{x: 1, y: 1}} end={{x: 0,y: 1}}  colors={['#8c358e', '#b01e7a']} style={styles.container}>
         <Image source={require('../../../../assets/images/igram_logo.png')} 
            style={
@@ -59,6 +61,7 @@ class LoginScreen extends Component{
           }
         />
         <Formik 
+           ref={Formik => {this.form = Formik}}
            initialValues={this.state}
            validationSchema={object().shape({
              userName: string().lowercase().trim().required(Messages.emptyUsername),   
@@ -104,12 +107,18 @@ class LoginScreen extends Component{
            )}
         </Formik>
       </LinearGradient>
+      </DismissKeyBoard>
     );
   }
 }
 
+mapStateToProps = state => ({
+  userAdded: state.userReducer.userAdded,
+  authenticated: state.userReducer.authenticated,
+});
 mapDispatchToProps = dispatch => ({
   saveUserLoginStatus: auth => dispatch(saveUserToken(auth)),
   createUser: userInfo => dispatch(addUser(userInfo)),
+  validateUser: userInfo => dispatch(authenticateUser(userInfo)),
 });
-export default connect(null, mapDispatchToProps)(LoginScreen); 
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen); 

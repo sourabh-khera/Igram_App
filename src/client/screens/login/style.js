@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     container: {
@@ -10,10 +11,12 @@ const styles = StyleSheet.create({
       color: 'white', 
       fontSize: 15, 
       marginBottom: 10,
+      fontWeight: "bold"
     },
     passWordError: {
       color: 'white', 
       fontSize: 15, 
+      fontWeight: "bold"
     },
     bottomTextContainer: {
       flexDirection: 'row', 

@@ -8,10 +8,12 @@
     "start:dev": "nodemon ./src/server/server.js"
   },
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "formik": "^1.4.2",
     "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mongoose": "^5.4.14",
     "react": "16.6.3",
