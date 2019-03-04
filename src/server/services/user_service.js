@@ -12,7 +12,7 @@ exports.addUser = userDetails => {
                     if (err) {
                         reject(err);
                     }
-                    resolve({ userCreated: true });
+                    resolve({ userCreated: true, userId: data._id });
                 });
             }
         });

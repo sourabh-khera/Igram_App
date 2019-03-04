@@ -10,10 +10,11 @@ exports.createUser = (req, res) => {
    bcrpyt.hash(password, saltRounds).then(hash => {
       userServices.addUser({userName, password: hash})
       .then(data => {
-        const { userCreated } = data;
+        const { userCreated, userId } = data;
         if(userCreated){
           const userClaim = {
             userName: userDetails.userName,
+            userId
           };
           const token = jwtToken.sign(userClaim, 'Nothing Is Impossible', {expiresIn: '365d'});
           res.status(200).send({userCreated, token});
@@ -21,7 +22,7 @@ exports.createUser = (req, res) => {
           res.status(200).send({userCreated});
         }
       })
-      .catch(err => res.sendStatus(404));
+      .catch(err => res.status(404).send('unable to create user'));
     }).catch(err => res.status(404).send('error in password encryption'));
    
 }
@@ -35,6 +36,7 @@ exports.authenticateUser = (req, res) => {
           if(auth){
             const userClaim = {
               userName: userDetails.userName,
+              userId: user._id,
             };
             const token = jwtToken.sign(userClaim, 'Nothing Is Impossible', {expiresIn: '365d'});
             res.status(200).send({authenticated: auth, token});
@@ -47,6 +49,6 @@ exports.authenticateUser = (req, res) => {
         res.status(200).send({authenticated: false});
       }
       
-  }).catch(err => res.sendStatus(404));
+  }).catch(err => res.status(404).send('problem in user authentication'));
       
 }

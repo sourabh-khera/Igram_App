@@ -6,7 +6,6 @@ import styles from './style';
 const userPost = ({height, ratio, url, createdAt}) => (
   <Fragment>
      <Image source={{uri: url}} style={{ width: '100%', height: height / ratio}} />
-     {/* <View style={{ width: '100%', height: height / ratio, backgroundColor: 'gray' }} /> */}
      <View style={styles.likeContainer}>
          <Ionicons name="md-heart-empty" size={28} />
          <Text style={styles.dateTimeText}>{createdAt}</Text>
