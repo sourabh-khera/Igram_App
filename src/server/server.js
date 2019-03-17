@@ -5,7 +5,7 @@ const routes = require('./routes');
 
 const app = express();
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 routes(app);
 
 const PORT = 3000;

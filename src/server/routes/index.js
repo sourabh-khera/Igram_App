@@ -14,6 +14,8 @@ const verifyToken = (req, res, next) => {
             next();
           }
        })
+   } else {
+      res.send('please send the token');
    }
 }
 module.exports = app => {

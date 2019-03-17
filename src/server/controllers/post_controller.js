@@ -1,11 +1,13 @@
 const postServices = require('../services/post_service');
 const jwtToken = require('jsonwebtoken');
 const isEmpty = require('lodash/isEmpty');
+const cloudinaryService = require('../services/cloudinary.service');
 
 exports.createPost = (req, res) => {
-   const postDetails = req.body;
+   const postUrl = req.body.uri;
    const userId = req.userId;
-   console.log(postDetails, "post---", userId, "id----");
+   console.log(postUrl, "post---", userId, "id----");
+   cloudinaryService.saveImageToCloudinary(postUrl)
   //  postServices.addPost({userName, password: hash})
   //  .then(data => {
   //      console.log(data, "data-------post");  
