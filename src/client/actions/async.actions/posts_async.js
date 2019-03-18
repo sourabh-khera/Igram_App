@@ -23,8 +23,7 @@ export const fetchUsersPosts = () => async (dispatch) => {
    
 };
 
-
-export const addNewUserPost = (token, uri) => async (dispatch) => {
+export const addNewUserPost = (token, uri, height, width) => async (dispatch) => {
     console.log("token---", token, "uri----", uri);
     dispatch(requestAPI());
     try {
@@ -34,7 +33,7 @@ export const addNewUserPost = (token, uri) => async (dispatch) => {
               'Content-Type': 'application/json',             
               'authorization': token,
             },
-            body: JSON.stringify({uri})
+            body: JSON.stringify({uri, height, width})
         });
         dispatch(receiveAPI());
         console.log(response, "response-----")

@@ -21,6 +21,12 @@ const styles  = StyleSheet.create({
     fontSize: 16, 
     fontFamily: 'Helvetica', 
     color: '#c3c3c3',
+  },
+  editIcon: {
+    alignSelf: 'flex-end',
+  },
+  iconProfileContainer: {
+    flexDirection: 'row',
   }
 });
 

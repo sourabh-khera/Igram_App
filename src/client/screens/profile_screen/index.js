@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AsyncStorage } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { clearToken } from '../../actions/user.action';
 import { getPixelRatio, getImageWidthAndHeight } from '../../../utils/commonFuncions';
@@ -17,7 +18,10 @@ class ProfileScreen extends Component {
        const imageAttributes = getImageWidthAndHeight(200,200);
     return (
       <View style={styles.profileScreenContainer}>
-         <View style={{height: imageAttributes.height / ratio  , width: imageAttributes.width / ratio, ...styles.profileImageContainer}} />
+        <View style={styles.iconProfileContainer}>
+          <View style={{height: imageAttributes.height / ratio  , width: imageAttributes.width / ratio, ...styles.profileImageContainer}} />
+          <Icon name="edit" size={28} color="#ddd" style={styles.editIcon}/>
+        </View>
          <Text style={styles.userNameText}>Sourabh Khera</Text>
          <Text style={styles.emailText}>sourabh.khera@tothenew.com</Text>
          <LinearGradientButton
